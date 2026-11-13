@@ -1,3 +1,10 @@
 <Solution>
+  <Project Path="Sep2026.ConsoleApp4.Database/Sep2026.ConsoleApp4.Database.csproj" Id="7565afef-9b0c-4584-ad6a-188adc45ff31" />
   <Project Path="Sep2026.RestaurantConsoleApp/Sep2026.RestaurantConsoleApp.csproj" />
+  <Project Path="Sep2026.RestaurantConsoleApp2/Sep2026.RestaurantConsoleApp2.csproj" Id="b790debf-b8bf-444e-8cd0-e49585ed87d7" />
+  <Project Path="Sep2026.RestaurantConsoleApp3/Sep2026.RestaurantConsoleApp3.csproj" Id="68c75a17-7f21-4475-a116-f5480b05c4d1" />
+  <Project Path="Sep2026.RestaurantConsoleApp4/Sep2026.RestaurantConsoleApp4.csproj" Id="d5f560a6-25f5-46b6-8df4-6578773d3ae9" />
+  <Project Path="Sep2026.RestaurantOrderingWebApi/Sep2026.RestaurantOrderingWebApi.csproj" Id="49326c29-13bf-45a8-8b1a-697d021e9ded" />
+  <Project Path="Sep2026.RestaurantWinFormsApp/Sep2026.RestaurantWinFormsApp.csproj" Id="bc28cc5e-aeb2-4930-8b92-cd100db91d69" />
+  <Project Path="Sep2026.ZodiacHoroscopeWebApi/Sep2026.ZodiacHoroscopeWebApi.csproj" Id="64922d84-a4e9-4ff5-b6da-82973e4a013c" />
 </Solution>
