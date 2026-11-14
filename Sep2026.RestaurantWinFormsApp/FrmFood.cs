@@ -18,7 +18,16 @@ namespace Sep2026.RestaurantWinFormsApp
             {
                 AppDbContext db = new AppDbContext();
 
-                dataGridView1.DataSource = db.Foods.Where(x => x.IsAvailable == true).ToList();
+                dataGridView1.DataSource = db.Foods
+                    .Where(x => x.IsAvailable == true)
+                    .Select(x => new
+                    {
+                        x.FoodId,
+                        x.FoodName,
+                        x.Price,
+                        x.Category
+                    })
+                    .ToList();
 
             }
             catch (Exception ex)
@@ -33,6 +42,18 @@ namespace Sep2026.RestaurantWinFormsApp
             {
                 AppDbContext db = new AppDbContext();
 
+                if (string.IsNullOrWhiteSpace(txtFoodName.Text))
+                {
+                    MessageBox.Show("Please enter Food Name.");
+                    return;
+                }
+
+                if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
+                {
+                    MessageBox.Show("Please enter a valid price.");
+                    return;
+                }
+
                 string categoryName = txtCategory.Text.Trim();
 
                 var category = db.Categories.FirstOrDefault(c => c.CategoryName == categoryName);
@@ -46,7 +67,7 @@ namespace Sep2026.RestaurantWinFormsApp
                 db.Foods.Add(new Food
                 {
                     FoodName = txtFoodName.Text.Trim(),
-                    Price = decimal.Parse(txtPrice.Text),
+                    Price = price,
                     Category = category.CategoryName,
                     CategoryId = category.CategoryId,
                     CategoryNavigation = category,
@@ -60,6 +81,8 @@ namespace Sep2026.RestaurantWinFormsApp
                 MessageBox.Show(message);
 
                 ClearControls();
+
+                LoadFoods();
             }
             catch (Exception ex)
             {
@@ -78,7 +101,8 @@ namespace Sep2026.RestaurantWinFormsApp
             txtQuantity.Clear();
 
             txtFoodID.Focus();
-            
+          
+
         }
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -97,7 +121,23 @@ namespace Sep2026.RestaurantWinFormsApp
                     return;
                 }
 
-                int id = int.Parse(txtFoodID.Text);
+                if (string.IsNullOrWhiteSpace(txtFoodName.Text))
+                {
+                    MessageBox.Show("Please enter Food Name.");
+                    return;
+                }
+
+                if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
+                {
+                    MessageBox.Show("Please enter a valid price.");
+                    return;
+                }
+
+                if (!int.TryParse(txtFoodID.Text, out int id))
+                {
+                    MessageBox.Show("Please select a valid food.");
+                    return;
+                }
 
                 Food food = db.Foods.FirstOrDefault(f => f.FoodId == id);
 
@@ -120,19 +160,19 @@ namespace Sep2026.RestaurantWinFormsApp
                 }
 
                 food.FoodName = txtFoodName.Text.Trim();
-                food.Price = decimal.Parse(txtPrice.Text);
+                food.Price = price;
                 food.Category = category.CategoryName;
                 food.CategoryId = category.CategoryId;
 
                 int result = db.SaveChanges();
 
-                string message = result > 0
-                    ? "Updating Successful."
-                    : "No Changes Found.";
+                string message = result > 0 ? "Updating Successful." : "No Changes Found.";
 
                 MessageBox.Show(message);
 
                 ClearControls();
+
+                LoadFoods();
 
             }
             catch (Exception ex)
@@ -147,7 +187,11 @@ namespace Sep2026.RestaurantWinFormsApp
             {
                 AppDbContext db = new AppDbContext();
 
-                int id = int.Parse(txtFoodID.Text);
+                if (!int.TryParse(txtFoodID.Text, out int id))
+                {
+                    MessageBox.Show("Please select a food.");
+                    return;
+                }
 
                 Food food = db.Foods.FirstOrDefault(f => f.FoodId == id);
 
@@ -159,7 +203,7 @@ namespace Sep2026.RestaurantWinFormsApp
 
                 if (MessageBox.Show("Are you sure you want to delete this food?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    food.IsAvailable = true;
+                    food.IsAvailable = false;
 
                     db.SaveChanges();
 
@@ -167,12 +211,28 @@ namespace Sep2026.RestaurantWinFormsApp
 
                     ClearControls();
 
+                    LoadFoods();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void LoadFoods()
+        {
+            AppDbContext db = new AppDbContext();
+
+            dataGridView1.DataSource = db.Foods
+                .Where(x => x.IsAvailable == true)
+                .Select(x => new
+                {
+                    x.FoodId,
+                    x.FoodName,
+                    x.Price,
+                    x.Category
+                })
+                .ToList();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -191,7 +251,7 @@ namespace Sep2026.RestaurantWinFormsApp
 
         private void btnAddOrder_Click(object sender, EventArgs e)
         {
-  
+
             try
             {
                 AppDbContext db = new AppDbContext();
@@ -210,7 +270,7 @@ namespace Sep2026.RestaurantWinFormsApp
                 }
 
                 Food food = db.Foods.FirstOrDefault(x => x.FoodId == foodId && x.IsAvailable == true);
-                
+
                 if (food is null)
                 {
                     MessageBox.Show("Food Not Found!");
@@ -250,9 +310,7 @@ namespace Sep2026.RestaurantWinFormsApp
 
                 int result = db.SaveChanges();
 
-                MessageBox.Show(result > 0
-                    ? "Food Added to Order Successfully."
-                    : "Adding Failed.");
+                MessageBox.Show(result > 0 ? "Food Added to Order Successfully." : "Adding Failed.");
 
                 ShowCurrentOrder();
                 ClearControls();
@@ -262,7 +320,7 @@ namespace Sep2026.RestaurantWinFormsApp
                 MessageBox.Show(ex.Message);
             }
         }
-        
+
         private void ShowCurrentOrder()
         {
             AppDbContext db = new AppDbContext();
@@ -289,9 +347,51 @@ namespace Sep2026.RestaurantWinFormsApp
                 .ToList();
         }
 
+        private void btnRemoveFood_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView2.CurrentRow == null)
+                {
+                    MessageBox.Show("Please select a food from the order.");
+                    return;
+                }
+
+                int id = Convert.ToInt32(
+                    dataGridView2.CurrentRow.Cells["OrderDetailId"].Value
+                );
+
+                AppDbContext db = new AppDbContext();
+
+                OrderDetail detail = db.OrderDetails.FirstOrDefault(x => x.OrderDetailId == id && x.Order.Status == "Pending");
+
+                if (detail is null)
+                {
+                    MessageBox.Show("Food Not Found!");
+                    return;
+                }
+
+                if (MessageBox.Show("Are you sure you want to remove this food?", "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    db.OrderDetails.Remove(detail);
+
+                    db.SaveChanges();
+
+                    MessageBox.Show("Food Removed Successfully.");
+
+                    ShowCurrentOrder();
+                    ClearControls();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-           
+
             try
             {
                 AppDbContext db = new AppDbContext();
@@ -368,15 +468,7 @@ namespace Sep2026.RestaurantWinFormsApp
                 MessageBox.Show(ex.Message);
             }
         }
+      
     }
-    }
-
-
-
-
-
-
-
-
-
+}
 

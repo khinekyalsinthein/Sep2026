@@ -53,6 +53,7 @@
             txtQuantity = new TextBox();
             label6 = new Label();
             label8 = new Label();
+            btnRemoveFood = new Button();
             ((System.ComponentModel.ISupportInitialize)orderDetailBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -60,7 +61,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(174, 281);
+            btnAdd.Location = new Point(315, 217);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(120, 42);
             btnAdd.TabIndex = 0;
@@ -80,7 +81,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(320, 221);
+            btnDelete.Location = new Point(159, 281);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(116, 42);
             btnDelete.TabIndex = 2;
@@ -158,7 +159,7 @@
             // 
             // btnView
             // 
-            btnView.Location = new Point(174, 221);
+            btnView.Location = new Point(155, 217);
             btnView.Name = "btnView";
             btnView.Size = new Size(120, 42);
             btnView.TabIndex = 11;
@@ -184,7 +185,7 @@
             // 
             // btnAddOrder
             // 
-            btnAddOrder.Location = new Point(781, 246);
+            btnAddOrder.Location = new Point(729, 249);
             btnAddOrder.Name = "btnAddOrder";
             btnAddOrder.Size = new Size(104, 42);
             btnAddOrder.TabIndex = 14;
@@ -194,9 +195,9 @@
             // 
             // btnCheckOut
             // 
-            btnCheckOut.Location = new Point(932, 246);
+            btnCheckOut.Location = new Point(999, 248);
             btnCheckOut.Name = "btnCheckOut";
-            btnCheckOut.Size = new Size(106, 45);
+            btnCheckOut.Size = new Size(115, 43);
             btnCheckOut.TabIndex = 15;
             btnCheckOut.Text = "Check Out";
             btnCheckOut.UseVisualStyleBackColor = true;
@@ -263,11 +264,22 @@
             label8.TabIndex = 26;
             label8.Text = "Quantity";
             // 
+            // btnRemoveFood
+            // 
+            btnRemoveFood.Location = new Point(861, 248);
+            btnRemoveFood.Name = "btnRemoveFood";
+            btnRemoveFood.Size = new Size(111, 43);
+            btnRemoveFood.TabIndex = 27;
+            btnRemoveFood.Text = "Remove Food";
+            btnRemoveFood.UseVisualStyleBackColor = true;
+            btnRemoveFood.Click += btnRemoveFood_Click;
+            // 
             // FrmFood
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1233, 640);
+            Controls.Add(btnRemoveFood);
             Controls.Add(label8);
             Controls.Add(label6);
             Controls.Add(txtQuantity);
@@ -327,5 +339,6 @@
         private TextBox txtQuantity;
         private Label label6;
         private Label label8;
+        private Button btnRemoveFood;
     }
 }
