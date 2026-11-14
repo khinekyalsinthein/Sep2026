@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Sep2026.ConsoleApp4.Database.ZodiacDbContextModels;
+using Sep2026.ZodiacHoroscope.Database.AppDbContextModels;
 using Sep2026.ZodiacHoroscopeWebApi.Models;
 using System.Text.Json;
 

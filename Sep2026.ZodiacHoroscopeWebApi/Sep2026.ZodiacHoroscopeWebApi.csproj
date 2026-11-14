@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sep2026.ConsoleApp4.Database\Sep2026.ConsoleApp4.Database.csproj" />
+    <ProjectReference Include="..\Sep2026.ZodiacHoroscope.Database\Sep2026.ZodiacHoroscope.Database.csproj" />
   </ItemGroup>
 
 </Project>

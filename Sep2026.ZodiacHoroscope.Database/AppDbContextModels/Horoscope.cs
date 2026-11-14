@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sep2026.ConsoleApp4.Database.ZodiacDbContextModels;
+namespace Sep2026.ZodiacHoroscope.Database.AppDbContextModels;
 
 public partial class Horoscope
 {

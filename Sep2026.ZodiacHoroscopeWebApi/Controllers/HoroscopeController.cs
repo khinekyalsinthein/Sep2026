@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sep2026.ConsoleApp4.Database.ZodiacDbContextModels;
+using Sep2026.ZodiacHoroscope.Database.AppDbContextModels;
 using Sep2026.ZodiacHoroscopeWebApi.Models;
 
 namespace Sep2026.ZodiacHoroscopeWebApi.Controllers
